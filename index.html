@@ -1295,16 +1295,40 @@ footer span{color:var(--blood);}
 }
 .bounty-company{
   font-family:'Bungee',sans-serif;
-  font-size:24px;
-  letter-spacing:2px;
+  font-size:18px;
+  letter-spacing:1px;
   color:var(--ink);
   margin-top:8px;
   margin-bottom:4px;
-  line-height:1;
+  line-height:1.15;
 }
 .bounty-company::before{
   content:'※ ';
   color:var(--blood);
+}
+.bounty-fit{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-family:'Crimson Pro',serif;
+  font-style:italic;
+  font-size:14.5px;
+  line-height:1.45;
+  color:var(--ink);
+  background:rgba(200,16,46,.06);
+  border-left:3px solid var(--blood);
+  padding:10px 12px;
+  margin-bottom:16px;
+}
+.bounty-fit b{
+  font-style:normal;
+  font-family:'Anton',sans-serif;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:12px;
+  color:var(--blood);
+  display:block;
+  margin-bottom:2px;
 }
 .bounty-codename{
   font-family:'Permanent Marker',cursive;
@@ -1350,8 +1374,7 @@ footer span{color:var(--blood);}
   grid-template-columns: 1fr auto;
   gap:32px;
   align-items:center;
-  transition:all .35s ease;
-  overflow:hidden;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1), opacity .7s ease, box-shadow .4s ease;
 }
 .college-feature::before{
   content:'';
@@ -1362,8 +1385,8 @@ footer span{color:var(--blood);}
   pointer-events:none;
 }
 .college-feature:hover{
-  transform:translate(-4px,-4px);
-  box-shadow:14px 14px 0 var(--gold);
+  transform:translateY(-6px);
+  box-shadow:14px 16px 0 var(--gold);
 }
 .college-badge{
   position:absolute;
@@ -1702,6 +1725,92 @@ footer span{color:var(--blood);}
   flex-shrink:0;
 }
 
+/* ====== REACT-BITS EFFECT HOSTS ====== */
+#metaballs-host{
+  position:absolute;
+  inset:0;
+  z-index:0;          /* behind contact-inner (z-index 2) */
+  pointer-events:none;
+  opacity:.9;
+}
+
+/* ====== LOGO LOOP (tech-stack marquee) ====== */
+.logo-loop{
+  position:relative;
+  margin:44px 0 8px;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  overflow:hidden;
+  border-top:2px solid rgba(245,240,230,.18);
+  border-bottom:2px solid rgba(245,240,230,.18);
+  padding:28px 0;
+}
+.logo-loop__row{ overflow:hidden; }
+.logo-loop__track{
+  display:flex;
+  width:max-content;
+  animation:logoScroll 38s linear infinite;
+}
+.logo-loop__track--rev{
+  animation-direction:reverse;
+  animation-duration:46s;
+}
+.logo-loop:hover .logo-loop__track{ animation-play-state:paused; }
+.logo-loop__group{
+  display:flex;
+  align-items:center;
+  gap:64px;
+  padding-right:64px;
+}
+.logo-loop__item{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  opacity:.78;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.2,.8,.2,1);
+}
+.logo-loop__item img{
+  height:46px;
+  width:auto;
+  display:block;
+  -webkit-user-drag:none;
+  user-select:none;
+}
+.logo-loop__item:hover{
+  opacity:1;
+  transform:scale(1.22) rotate(-3deg);
+}
+/* Edge fades into the ink background */
+.logo-loop--fade::before,
+.logo-loop--fade::after{
+  content:'';
+  position:absolute;
+  top:0; bottom:0;
+  width:clamp(40px,10%,140px);
+  z-index:3;
+  pointer-events:none;
+}
+.logo-loop--fade::before{
+  left:0;
+  background:linear-gradient(to right, var(--ink) 0%, rgba(10,10,10,0) 100%);
+}
+.logo-loop--fade::after{
+  right:0;
+  background:linear-gradient(to left, var(--ink) 0%, rgba(10,10,10,0) 100%);
+}
+@keyframes logoScroll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .logo-loop__track{ animation:none !important; }
+}
+@media (max-width:768px){
+  .logo-loop__item img{ height:34px; }
+  .logo-loop__group{ gap:44px; padding-right:44px; }
+}
+
 /* ====== TWEAKS PANEL ====== */
 #tweaks-panel{
   position:fixed;
@@ -1784,10 +1893,10 @@ footer span{color:var(--blood);}
   <div class="brand">SUDHARSHAN<span>.S</span></div>
   <ul>
     <li><a href="#origin">Origin</a></li>
-    <li><a href="#code">Code</a></li>
     <li><a href="#powers">Powers</a></li>
     <li><a href="#chapters">Chapters</a></li>
     <li><a href="#arcs">Arcs</a></li>
+    <li><a href="#code">Code</a></li>
     <li><a href="#bounty">Bounty</a></li>
     <li><a href="#academy">Academy</a></li>
     <li><a href="#contact">Recruit</a></li>
@@ -1893,6 +2002,261 @@ footer span{color:var(--blood);}
   </div>
 </section>
 
+<!-- ============= POWER LEVELS ============= -->
+<section class="powers" id="powers">
+  <div class="kanji-deco">力</div>
+  <div class="drift-kanji" style="bottom:10%; left:5%; font-size:100px; color:var(--paper); animation-delay:-5s;">技</div>
+  <div style="position:relative;z-index:2;max-width:1200px;margin:0 auto;">
+    <div class="section-label">Chapter 02</div>
+    <h2 class="section-title">Power Levels</h2>
+    <p class="powers-intro">Stats accumulated through hackathons, late-night sim runs, ROS topic graphs that refused to make sense, and the occasional successful blood donation drive.</p>
+
+    <!-- LOGO LOOP: scrolling tech-stack marquee -->
+    <div class="logo-loop logo-loop--fade" id="logoLoop" aria-label="Technology stack">
+      <div class="logo-loop__row">
+        <div class="logo-loop__track">
+          <div class="logo-loop__group">
+            <a class="logo-loop__item" href="https://www.python.org" target="_blank" title="Python"><img src="https://cdn.simpleicons.org/python/f5f0e6" alt="Python" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.docker.com" target="_blank" title="Docker"><img src="https://cdn.simpleicons.org/docker/f5f0e6" alt="Docker" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.ros.org" target="_blank" title="ROS"><img src="https://cdn.simpleicons.org/ros/f5f0e6" alt="ROS" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.nvidia.com" target="_blank" title="NVIDIA"><img src="https://cdn.simpleicons.org/nvidia/f5f0e6" alt="NVIDIA" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://opencv.org" target="_blank" title="OpenCV"><img src="https://cdn.simpleicons.org/opencv/f5f0e6" alt="OpenCV" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://isocpp.org" target="_blank" title="C++"><img src="https://cdn.simpleicons.org/cplusplus/f5f0e6" alt="C++" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.linux.org" target="_blank" title="Linux"><img src="https://cdn.simpleicons.org/linux/f5f0e6" alt="Linux" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://git-scm.com" target="_blank" title="Git"><img src="https://cdn.simpleicons.org/git/f5f0e6" alt="Git" loading="lazy"></a>
+          </div>
+          <div class="logo-loop__group" aria-hidden="true">
+            <a class="logo-loop__item" href="https://www.python.org" target="_blank" tabindex="-1" title="Python"><img src="https://cdn.simpleicons.org/python/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.docker.com" target="_blank" tabindex="-1" title="Docker"><img src="https://cdn.simpleicons.org/docker/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.ros.org" target="_blank" tabindex="-1" title="ROS"><img src="https://cdn.simpleicons.org/ros/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.nvidia.com" target="_blank" tabindex="-1" title="NVIDIA"><img src="https://cdn.simpleicons.org/nvidia/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://opencv.org" target="_blank" tabindex="-1" title="OpenCV"><img src="https://cdn.simpleicons.org/opencv/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://isocpp.org" target="_blank" tabindex="-1" title="C++"><img src="https://cdn.simpleicons.org/cplusplus/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.linux.org" target="_blank" tabindex="-1" title="Linux"><img src="https://cdn.simpleicons.org/linux/f5f0e6" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://git-scm.com" target="_blank" tabindex="-1" title="Git"><img src="https://cdn.simpleicons.org/git/f5f0e6" alt="" loading="lazy"></a>
+          </div>
+        </div>
+      </div>
+      <div class="logo-loop__row">
+        <div class="logo-loop__track logo-loop__track--rev">
+          <div class="logo-loop__group">
+            <a class="logo-loop__item" href="https://pytorch.org" target="_blank" title="PyTorch"><img src="https://cdn.simpleicons.org/pytorch/f4b431" alt="PyTorch" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://openjdk.org" target="_blank" title="Java"><img src="https://cdn.simpleicons.org/openjdk/f4b431" alt="Java" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://ubuntu.com" target="_blank" title="Ubuntu"><img src="https://cdn.simpleicons.org/ubuntu/f4b431" alt="Ubuntu" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.raspberrypi.com" target="_blank" title="Raspberry Pi"><img src="https://cdn.simpleicons.org/raspberrypi/f4b431" alt="Raspberry Pi" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.mysql.com" target="_blank" title="MySQL"><img src="https://cdn.simpleicons.org/mysql/f4b431" alt="MySQL" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.arduino.cc" target="_blank" title="Arduino"><img src="https://cdn.simpleicons.org/arduino/f4b431" alt="Arduino" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.gnu.org/software/bash/" target="_blank" title="Bash"><img src="https://cdn.simpleicons.org/gnubash/f4b431" alt="Bash" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://cmake.org" target="_blank" title="CMake"><img src="https://cdn.simpleicons.org/cmake/f4b431" alt="CMake" loading="lazy"></a>
+          </div>
+          <div class="logo-loop__group" aria-hidden="true">
+            <a class="logo-loop__item" href="https://pytorch.org" target="_blank" tabindex="-1" title="PyTorch"><img src="https://cdn.simpleicons.org/pytorch/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://openjdk.org" target="_blank" tabindex="-1" title="Java"><img src="https://cdn.simpleicons.org/openjdk/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://ubuntu.com" target="_blank" tabindex="-1" title="Ubuntu"><img src="https://cdn.simpleicons.org/ubuntu/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.raspberrypi.com" target="_blank" tabindex="-1" title="Raspberry Pi"><img src="https://cdn.simpleicons.org/raspberrypi/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.mysql.com" target="_blank" tabindex="-1" title="MySQL"><img src="https://cdn.simpleicons.org/mysql/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.arduino.cc" target="_blank" tabindex="-1" title="Arduino"><img src="https://cdn.simpleicons.org/arduino/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://www.gnu.org/software/bash/" target="_blank" tabindex="-1" title="Bash"><img src="https://cdn.simpleicons.org/gnubash/f4b431" alt="" loading="lazy"></a>
+            <a class="logo-loop__item" href="https://cmake.org" target="_blank" tabindex="-1" title="CMake"><img src="https://cdn.simpleicons.org/cmake/f4b431" alt="" loading="lazy"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="power-grid">
+      <div class="power-card reveal">
+        <div class="level">★ EXPERT TIER</div>
+        <div class="stat-num" data-target="11">0</div>
+        <div class="stat-label">Mastery Stacks</div>
+        <div class="stat-desc">Python · Docker · ROS 2 · Isaac Sim · IoT · Jetson Nano</div>
+      </div>
+      <div class="power-card reveal">
+        <div class="level">⚡ INTERMEDIATE</div>
+        <div class="stat-num" data-target="12">0</div>
+        <div class="stat-label">Combat Skills</div>
+        <div class="stat-desc">DevOps · Robotics · Linux · SQL · OpenCV · C++ · Java</div>
+      </div>
+      <div class="power-card reveal">
+        <div class="level">⊹ BEGINNER PATH</div>
+        <div class="stat-num" data-target="8">0</div>
+        <div class="stat-label">In Training</div>
+        <div class="stat-desc">Embedded · IoT Crypto · Quantum · ML · Cloud</div>
+      </div>
+      <div class="power-card reveal">
+        <div class="level">⌬ SIDE QUESTS</div>
+        <div class="stat-num" data-target="4">0</div>
+        <div class="stat-label">Co-Curricular</div>
+        <div class="stat-desc">NSS Parade Commander · Volleyball Captain · Social Service</div>
+      </div>
+    </div>
+
+    <div class="skills-block">
+      <div class="skill-row reveal"><div class="skill-meta"><span>PYTHON</span><span class="pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="95"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>ROS 2 / ISAAC SIM</span><span class="pct">92%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="92"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>DOCKER</span><span class="pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>NVIDIA JETSON / IoT</span><span class="pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="88"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>ENTREPRENEURSHIP &amp; LEADERSHIP</span><span class="pct">93%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="93"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>ROBOTICS / GAZEBO</span><span class="pct">80%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="80"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>OPENCV / COMPUTER VISION</span><span class="pct">75%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="75"></div></div></div>
+      <div class="skill-row reveal"><div class="skill-meta"><span>MACHINE LEARNING</span><span class="pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="70"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CHAPTERS (work) ============= -->
+<section class="chapters" id="chapters">
+  <div class="kanji-deco">道</div>
+  <div class="drift-kanji" style="top:5%; left:3%; font-size:120px; animation-delay:-1s;">歩</div>
+  <div style="max-width:1200px;margin:0 auto;position:relative;z-index:2;">
+    <div class="section-label">Chapter 03</div>
+    <h2 class="section-title">Chapters of the Journey</h2>
+
+    <div class="timeline">
+
+      <div class="chapter">
+        <div class="chapter-card">
+          <div class="chapter-meta">
+            <div class="chapter-num">CH. 06 — CURRENT</div>
+            <div class="chapter-date">AUG 2025 → ONGOING</div>
+          </div>
+          <h3 class="chapter-title">Student Director</h3>
+          <div class="chapter-org">Innovation &amp; Incubation Cell · Karunya</div>
+          <ul>
+            <li>Leading students into Design Thinking and innovation projects</li>
+            <li>Focusing on real-world problem framing</li>
+            <li>Hackathon prep, mentorship, organisational structure</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-card">
+          <div class="chapter-meta">
+            <div class="chapter-num">CH. 05 — CURRENT</div>
+            <div class="chapter-date">AUG 2025 → ONGOING</div>
+          </div>
+          <h3 class="chapter-title">Head of Blood Donations</h3>
+          <div class="chapter-org">NSS Karunya</div>
+          <ul>
+            <li>Conducting awareness camps about blood donation</li>
+            <li>Coordinating arrangements for those in need</li>
+            <li>Conducted Mega Blood Donation Camp</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-card">
+          <div class="chapter-meta">
+            <div class="chapter-num">CH. 04 — CURRENT</div>
+            <div class="chapter-date">SEP 2024 → ONGOING</div>
+          </div>
+          <h3 class="chapter-title">Student Trainee · Robotics &amp; Embodied AI</h3>
+          <div class="chapter-org">Karunya Innovation &amp; Design Studio</div>
+          <ul>
+            <li>NVIDIA stack: Warp, Isaac Sim, Sim-to-Real, Isaac Lab, MoveIt2</li>
+            <li>e-Yantra Robotic Challenge: ROS 2, Gazebo, Git, Computer Vision</li>
+            <li>MoveIt arm-manipulation on PX-100; e-Yantra Innovation track</li>
+            <li>IoT basics: line-following car, Jetbot, Duckietown</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-card">
+          <div class="chapter-meta">
+            <div class="chapter-num">CH. 03</div>
+            <div class="chapter-date">NOV 2024 → FEB 2026</div>
+          </div>
+          <h3 class="chapter-title">Business Development Executive</h3>
+          <div class="chapter-org">E-Cell Karunya · Coimbatore</div>
+          <ul>
+            <li>Guiding students to establish startups</li>
+            <li>Mentoring on Business Development &amp; Design Thinking</li>
+            <li>Driving inter-college collaborations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-card">
+          <div class="chapter-meta">
+            <div class="chapter-num">CH. 02</div>
+            <div class="chapter-date">NOV 2023 → JUL 2025</div>
+          </div>
+          <h3 class="chapter-title">NSS Parade Commander</h3>
+          <div class="chapter-org">NSS Karunya</div>
+          <ul>
+            <li>Head-in-Command representing Karunya NSS on Republic &amp; Independence Day</li>
+            <li>Conducted events on non-academic days</li>
+            <li>Crowd coordination and student management</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= ARCS (projects) ============= -->
+<section class="arcs" id="arcs">
+  <div class="kanji-deco">創</div>
+  <div class="drift-kanji" style="top:8%; right:4%; font-size:110px; color:var(--gold); opacity:.08; animation-delay:-2s;">創</div>
+  <div style="position:relative;z-index:2;max-width:1300px;margin:0 auto;">
+    <div class="section-label">Chapter 04</div>
+    <h2 class="section-title">Major Arcs</h2>
+
+    <div class="arc-grid">
+
+      <div class="arc-card reveal">
+        <div class="arc-tag">Research Arc</div>
+        <h3 class="arc-title">GPU-Accelerated Plant Biomechanics</h3>
+        <div class="arc-date">Jan 2026 → Apr 2026</div>
+        <p class="arc-desc">A simulation framework for plant biomechanics aimed at agricultural robotics — using GPU compute to model how stems, leaves and root systems respond to forces a robot might apply.</p>
+        <div class="arc-stack">
+          <span>GPU</span><span>Simulation</span><span>Agri-Robotics</span>
+        </div>
+        <a href="https://github.com/SudharshanSuman/GPU-Accelerated-Simulation-of-Plant-Biomechanics-For-Agricultural-Robotics.git" class="arc-link" target="_blank">VIEW ON GITHUB</a>
+      </div>
+
+      <div class="arc-card reveal">
+        <div class="arc-tag">Reinforcement Arc</div>
+        <h3 class="arc-title">Sim-to-Real RL — Quadruped Locomotion</h3>
+        <div class="arc-date">Apr 2026</div>
+        <p class="arc-desc">Built a sim-to-real RL pipeline for Boston Dynamics Spot in NVIDIA Isaac Sim / Isaac Lab. Designed a curriculum from flat to rough terrain (PPO via rsl_rl), exporting to ONNX for ROS 2 deployment.</p>
+        <div class="arc-stack">
+          <span>Isaac Lab</span><span>PPO</span><span>ONNX</span><span>ROS 2</span>
+        </div>
+        <a href="#" class="arc-link">DETAILS SOON</a>
+      </div>
+
+      <div class="arc-card reveal">
+        <div class="arc-tag">Hardware Arc</div>
+        <h3 class="arc-title">Infrastructure Repurposing — CPU Cluster Server</h3>
+        <div class="arc-date">May 2026 → Current</div>
+        <p class="arc-desc">Building a server out of clustered CPUs — turning end-of-life hardware into a usable compute backbone for student research and lab workloads.</p>
+        <div class="arc-stack">
+          <span>Linux</span><span>Clustering</span><span>DevOps</span>
+        </div>
+        <a href="#" class="arc-link">IN PROGRESS</a>
+      </div>
+
+      <div class="arc-card reveal">
+        <div class="arc-tag">Field Arc</div>
+        <h3 class="arc-title">Exo-Skeleton for Agriculture</h3>
+        <div class="arc-date">Mar 2026 → Current</div>
+        <p class="arc-desc">An AI + robotics powered exoskeleton focused on supporting agricultural workers — reducing physical strain on the body for repetitive farm tasks.</p>
+        <div class="arc-stack">
+          <span>AI</span><span>Robotics</span><span>Wearable</span>
+        </div>
+        <a href="#" class="arc-link">PROTOTYPING</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ============= TORII DIVIDER ============= -->
 <div class="torii-divider" aria-hidden="true">
   <svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
@@ -1935,7 +2299,7 @@ footer span{color:var(--blood);}
   <div class="drift-kanji" style="top:10%; left:5%; font-size:90px; color:var(--paper); animation-delay:-3s;">志</div>
   <div class="drift-kanji" style="bottom:8%; right:7%; font-size:110px; color:var(--paper); animation-delay:-7s;">挑</div>
   <div style="max-width:1300px; margin:0 auto; position:relative; z-index:2;">
-    <div class="section-label">Chapter 02 · Bushidō Code</div>
+    <div class="section-label">Chapter 05 · Bushidō Code</div>
     <h2 class="section-title">Code of the Warrior</h2>
     <p class="code-intro">Six tenets I borrowed from anime that beat me into shape. Read like a manifesto, lived like a training schedule. Each one earned, none of them optional.</p>
 
@@ -2089,208 +2453,6 @@ footer span{color:var(--blood);}
   </div>
 </section>
 
-<!-- ============= POWER LEVELS ============= -->
-<section class="powers" id="powers">
-  <div class="kanji-deco">力</div>
-  <div class="drift-kanji" style="bottom:10%; left:5%; font-size:100px; color:var(--paper); animation-delay:-5s;">技</div>
-  <div style="position:relative;z-index:2;max-width:1200px;margin:0 auto;">
-    <div class="section-label">Chapter 03</div>
-    <h2 class="section-title">Power Levels</h2>
-    <p class="powers-intro">Stats accumulated through hackathons, late-night sim runs, ROS topic graphs that refused to make sense, and the occasional successful blood donation drive.</p>
-
-    <div class="power-grid">
-      <div class="power-card reveal">
-        <div class="level">★ EXPERT TIER</div>
-        <div class="stat-num" data-target="11">0</div>
-        <div class="stat-label">Mastery Stacks</div>
-        <div class="stat-desc">Python · Docker · ROS 2 · Isaac Sim · IoT · Jetson Nano</div>
-      </div>
-      <div class="power-card reveal">
-        <div class="level">⚡ INTERMEDIATE</div>
-        <div class="stat-num" data-target="12">0</div>
-        <div class="stat-label">Combat Skills</div>
-        <div class="stat-desc">DevOps · Robotics · Linux · SQL · OpenCV · C++ · Java</div>
-      </div>
-      <div class="power-card reveal">
-        <div class="level">⊹ BEGINNER PATH</div>
-        <div class="stat-num" data-target="8">0</div>
-        <div class="stat-label">In Training</div>
-        <div class="stat-desc">Embedded · IoT Crypto · Quantum · ML · Cloud</div>
-      </div>
-      <div class="power-card reveal">
-        <div class="level">⌬ SIDE QUESTS</div>
-        <div class="stat-num" data-target="4">0</div>
-        <div class="stat-label">Co-Curricular</div>
-        <div class="stat-desc">NSS Parade Commander · Volleyball Captain · Social Service</div>
-      </div>
-    </div>
-
-    <div class="skills-block">
-      <div class="skill-row reveal"><div class="skill-meta"><span>PYTHON</span><span class="pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="95"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>ROS 2 / ISAAC SIM</span><span class="pct">92%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="92"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>DOCKER</span><span class="pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>NVIDIA JETSON / IoT</span><span class="pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="88"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>ENTREPRENEURSHIP &amp; LEADERSHIP</span><span class="pct">93%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="93"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>ROBOTICS / GAZEBO</span><span class="pct">80%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="80"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>OPENCV / COMPUTER VISION</span><span class="pct">75%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="75"></div></div></div>
-      <div class="skill-row reveal"><div class="skill-meta"><span>MACHINE LEARNING</span><span class="pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="70"></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============= CHAPTERS (work) ============= -->
-<section class="chapters" id="chapters">
-  <div class="kanji-deco">道</div>
-  <div class="drift-kanji" style="top:5%; left:3%; font-size:120px; animation-delay:-1s;">歩</div>
-  <div style="max-width:1200px;margin:0 auto;position:relative;z-index:2;">
-    <div class="section-label">Chapter 04</div>
-    <h2 class="section-title">Chapters of the Journey</h2>
-
-    <div class="timeline">
-
-      <div class="chapter">
-        <div class="chapter-card">
-          <div class="chapter-meta">
-            <div class="chapter-num">CH. 06 — CURRENT</div>
-            <div class="chapter-date">AUG 2025 → ONGOING</div>
-          </div>
-          <h3 class="chapter-title">Student Director</h3>
-          <div class="chapter-org">Innovation &amp; Incubation Cell · Karunya</div>
-          <ul>
-            <li>Leading students into Design Thinking and innovation projects</li>
-            <li>Focusing on real-world problem framing</li>
-            <li>Hackathon prep, mentorship, organisational structure</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="chapter">
-        <div class="chapter-card">
-          <div class="chapter-meta">
-            <div class="chapter-num">CH. 05 — CURRENT</div>
-            <div class="chapter-date">AUG 2025 → ONGOING</div>
-          </div>
-          <h3 class="chapter-title">Head of Blood Donations</h3>
-          <div class="chapter-org">NSS Karunya</div>
-          <ul>
-            <li>Conducting awareness camps about blood donation</li>
-            <li>Coordinating arrangements for those in need</li>
-            <li>Conducted Mega Blood Donation Camp</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="chapter">
-        <div class="chapter-card">
-          <div class="chapter-meta">
-            <div class="chapter-num">CH. 04 — CURRENT</div>
-            <div class="chapter-date">SEP 2024 → ONGOING</div>
-          </div>
-          <h3 class="chapter-title">Student Trainee · Robotics &amp; Embodied AI</h3>
-          <div class="chapter-org">Karunya Innovation &amp; Design Studio</div>
-          <ul>
-            <li>NVIDIA stack: Warp, Isaac Sim, Sim-to-Real, Isaac Lab, MoveIt2</li>
-            <li>e-Yantra Robotic Challenge: ROS 2, Gazebo, Git, Computer Vision</li>
-            <li>MoveIt arm-manipulation on PX-100; e-Yantra Innovation track</li>
-            <li>IoT basics: line-following car, Jetbot, Duckietown</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="chapter">
-        <div class="chapter-card">
-          <div class="chapter-meta">
-            <div class="chapter-num">CH. 03</div>
-            <div class="chapter-date">NOV 2024 → FEB 2026</div>
-          </div>
-          <h3 class="chapter-title">Business Development Executive</h3>
-          <div class="chapter-org">E-Cell Karunya · Coimbatore</div>
-          <ul>
-            <li>Guiding students to establish startups</li>
-            <li>Mentoring on Business Development &amp; Design Thinking</li>
-            <li>Driving inter-college collaborations</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="chapter">
-        <div class="chapter-card">
-          <div class="chapter-meta">
-            <div class="chapter-num">CH. 02</div>
-            <div class="chapter-date">NOV 2023 → JUL 2025</div>
-          </div>
-          <h3 class="chapter-title">NSS Parade Commander</h3>
-          <div class="chapter-org">NSS Karunya</div>
-          <ul>
-            <li>Head-in-Command representing Karunya NSS on Republic &amp; Independence Day</li>
-            <li>Conducted events on non-academic days</li>
-            <li>Crowd coordination and student management</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============= ARCS (projects) ============= -->
-<section class="arcs" id="arcs">
-  <div class="kanji-deco">創</div>
-  <div class="drift-kanji" style="top:8%; right:4%; font-size:110px; color:var(--gold); opacity:.08; animation-delay:-2s;">創</div>
-  <div style="position:relative;z-index:2;max-width:1300px;margin:0 auto;">
-    <div class="section-label">Chapter 05</div>
-    <h2 class="section-title">Major Arcs</h2>
-
-    <div class="arc-grid">
-
-      <div class="arc-card reveal">
-        <div class="arc-tag">Research Arc</div>
-        <h3 class="arc-title">GPU-Accelerated Plant Biomechanics</h3>
-        <div class="arc-date">Jan 2026 → Apr 2026</div>
-        <p class="arc-desc">A simulation framework for plant biomechanics aimed at agricultural robotics — using GPU compute to model how stems, leaves and root systems respond to forces a robot might apply.</p>
-        <div class="arc-stack">
-          <span>GPU</span><span>Simulation</span><span>Agri-Robotics</span>
-        </div>
-        <a href="https://github.com/SudharshanSuman/GPU-Accelerated-Simulation-of-Plant-Biomechanics-For-Agricultural-Robotics.git" class="arc-link" target="_blank">VIEW ON GITHUB</a>
-      </div>
-
-      <div class="arc-card reveal">
-        <div class="arc-tag">Reinforcement Arc</div>
-        <h3 class="arc-title">Sim-to-Real RL — Quadruped Locomotion</h3>
-        <div class="arc-date">Apr 2026</div>
-        <p class="arc-desc">Built a sim-to-real RL pipeline for Boston Dynamics Spot in NVIDIA Isaac Sim / Isaac Lab. Designed a curriculum from flat to rough terrain (PPO via rsl_rl), exporting to ONNX for ROS 2 deployment.</p>
-        <div class="arc-stack">
-          <span>Isaac Lab</span><span>PPO</span><span>ONNX</span><span>ROS 2</span>
-        </div>
-        <a href="#" class="arc-link">DETAILS SOON</a>
-      </div>
-
-      <div class="arc-card reveal">
-        <div class="arc-tag">Hardware Arc</div>
-        <h3 class="arc-title">Infrastructure Repurposing — CPU Cluster Server</h3>
-        <div class="arc-date">May 2026 → Current</div>
-        <p class="arc-desc">Building a server out of clustered CPUs — turning end-of-life hardware into a usable compute backbone for student research and lab workloads.</p>
-        <div class="arc-stack">
-          <span>Linux</span><span>Clustering</span><span>DevOps</span>
-        </div>
-        <a href="#" class="arc-link">IN PROGRESS</a>
-      </div>
-
-      <div class="arc-card reveal">
-        <div class="arc-tag">Field Arc</div>
-        <h3 class="arc-title">Exo-Skeleton for Agriculture</h3>
-        <div class="arc-date">Mar 2026 → Current</div>
-        <p class="arc-desc">An AI + robotics powered exoskeleton focused on supporting agricultural workers — reducing physical strain on the body for repetitive farm tasks.</p>
-        <div class="arc-stack">
-          <span>AI</span><span>Robotics</span><span>Wearable</span>
-        </div>
-        <a href="#" class="arc-link">PROTOTYPING</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ============= BOUNTY BOARD (planned company projects) ============= -->
 <section class="bounty" id="bounty">
   <div class="kanji-deco">標</div>
@@ -2313,71 +2475,77 @@ footer span{color:var(--blood);}
   <div style="max-width:1300px;margin:0 auto;position:relative;z-index:2;">
     <div class="section-label">Future Arc · Unwritten</div>
     <h2 class="section-title">The Bounty Board</h2>
-    <p class="bounty-intro">Targets currently in the crosshairs. Each card is a project I'd build, ship, and pitch directly to teams I'd love to work with — engineered to ladder off skills already in the stack and aimed at <strong>real, deployable problems</strong>.</p>
+    <p class="bounty-intro">A set of projects I'd build, ship, and pitch — each one engineered to ladder off skills already in my stack and aimed at <strong>real, deployable problems</strong>. I'm not naming names; instead each bounty lists <strong>the kind of team it's built for</strong> — so you'll know instantly if it's relatable to where you work.</p>
 
     <div class="bounty-grid" id="bountyGrid">
 
       <div class="bounty-card reveal" data-co="nvidia">
-        <div class="bounty-stamp">TARGET</div>
-        <div class="bounty-company">NVIDIA</div>
+        <div class="bounty-stamp">BOUNTY 01</div>
+        <div class="bounty-company">GPU-Accelerated Robotics Sim</div>
         <div class="bounty-codename">Operation: GreenField</div>
         <h3 class="bounty-title">Adaptive Sim-to-Real Curriculum for Agricultural Quadrupeds</h3>
-        <p class="bounty-desc">Extending my Spot RL pipeline into a published Isaac Lab environment for Indian farm terrain — paddy mud, hill slopes, plantation rows. Curriculum learning + domain randomization, exported to Jetson Orin for real deployment.</p>
+        <p class="bounty-desc">Extending my Spot RL pipeline into a published simulation environment for Indian farm terrain — paddy mud, hill slopes, plantation rows. Curriculum learning + domain randomization, exported to an edge AI module for real deployment.</p>
+        <div class="bounty-fit"><span><b>Relatable for</b>Teams building GPU-accelerated robotics simulators &amp; sim-to-real pipelines (think: the company behind Isaac Sim).</span></div>
         <div class="bounty-stack">
-          <span>Isaac Lab</span><span>PPO</span><span>Jetson Orin</span><span>ONNX</span>
+          <span>Isaac Lab</span><span>PPO</span><span>Edge AI</span><span>ONNX</span>
         </div>
       </div>
 
       <div class="bounty-card reveal" data-co="oracle">
-        <div class="bounty-stamp">TARGET</div>
-        <div class="bounty-company">ORACLE</div>
+        <div class="bounty-stamp">BOUNTY 02</div>
+        <div class="bounty-company">Enterprise Cloud Infrastructure</div>
         <div class="bounty-codename">Operation: FleetMind</div>
-        <h3 class="bounty-title">Edge-to-Cloud Robotics Telemetry on OCI</h3>
-        <p class="bounty-desc">A platform that streams live telemetry from a fleet of agri-robots into Oracle Cloud Infrastructure — real-time anomaly detection, digital-twin sync, and a dashboard farmers can actually read on their phones.</p>
+        <h3 class="bounty-title">Edge-to-Cloud Robotics Telemetry Platform</h3>
+        <p class="bounty-desc">A platform that streams live telemetry from a fleet of agri-robots into a major enterprise cloud — real-time anomaly detection, digital-twin sync, and a dashboard farmers can actually read on their phones.</p>
+        <div class="bounty-fit"><span><b>Relatable for</b>Enterprise cloud-infrastructure providers running fleet telemetry &amp; databases at scale.</span></div>
         <div class="bounty-stack">
-          <span>OCI</span><span>Kafka</span><span>ROS 2</span><span>Docker</span>
+          <span>Cloud</span><span>Kafka</span><span>ROS 2</span><span>Docker</span>
         </div>
       </div>
 
       <div class="bounty-card reveal" data-co="bosch">
-        <div class="bounty-stamp">TARGET</div>
-        <div class="bounty-company">BOSCH</div>
+        <div class="bounty-stamp">BOUNTY 03</div>
+        <div class="bounty-company">Smart-Factory Automation</div>
         <div class="bounty-codename">Operation: FactoryEye</div>
         <h3 class="bounty-title">ROS 2 + Vision Predictive Maintenance Stack</h3>
-        <p class="bounty-desc">A retrofit module that drops onto existing factory lines — OpenCV + ROS 2 on Jetson — to detect early CNC and conveyor failures before they cascade. Built for plug-in scalability.</p>
+        <p class="bounty-desc">A retrofit module that drops onto existing factory lines — OpenCV + ROS 2 on an edge board — to detect early CNC and conveyor failures before they cascade. Built for plug-in scalability.</p>
+        <div class="bounty-fit"><span><b>Relatable for</b>Industrial-automation &amp; smart-factory engineering groups (think: global manufacturing-tech makers).</span></div>
         <div class="bounty-stack">
           <span>OpenCV</span><span>ROS 2</span><span>IoT</span><span>Jetson Nano</span>
         </div>
       </div>
 
       <div class="bounty-card reveal" data-co="bostondynamics">
-        <div class="bounty-stamp">TARGET</div>
-        <div class="bounty-company">BOSTON DYNAMICS</div>
-        <div class="bounty-codename">Operation: Spot India</div>
+        <div class="bounty-stamp">BOUNTY 04</div>
+        <div class="bounty-company">Legged-Robotics Makers</div>
+        <div class="bounty-codename">Operation: Surefoot</div>
         <h3 class="bounty-title">Domain-Randomized Locomotion for South-Asian Terrain</h3>
-        <p class="bounty-desc">Direct extension of my current Spot RL work — teaching the policy to handle monsoon mud, broken gravel paths, and crowded Indian field environments. Open-source the trained policies + the Isaac Lab terrain library.</p>
+        <p class="bounty-desc">Direct extension of my current quadruped RL work — teaching the policy to handle monsoon mud, broken gravel paths, and crowded Indian field environments. Open-source the trained policies + the terrain library.</p>
+        <div class="bounty-fit"><span><b>Relatable for</b>Companies shipping real-world legged robots &amp; quadruped SDKs.</span></div>
         <div class="bounty-stack">
-          <span>Boston Dynamics SDK</span><span>Isaac Sim</span><span>RL</span><span>Domain Rand.</span>
+          <span>Quadruped SDK</span><span>Isaac Sim</span><span>RL</span><span>Domain Rand.</span>
         </div>
       </div>
 
       <div class="bounty-card reveal" data-co="intel">
-        <div class="bounty-stamp">TARGET</div>
-        <div class="bounty-company">INTEL</div>
+        <div class="bounty-stamp">BOUNTY 05</div>
+        <div class="bounty-company">Edge-AI Silicon &amp; Inference</div>
         <div class="bounty-codename">Operation: FarmSight</div>
-        <h3 class="bounty-title">OpenVINO Edge Pipeline for Crop Disease Detection</h3>
-        <p class="bounty-desc">A low-cost field kit running OpenVINO on Intel NUC — on-device crop disease classification for farmers without reliable internet. Optimised inference, fully offline, regional-language UI.</p>
+        <h3 class="bounty-title">Optimised Edge Pipeline for Crop Disease Detection</h3>
+        <p class="bounty-desc">A low-cost field kit running optimised inference on a compact edge PC — on-device crop disease classification for farmers without reliable internet. Fully offline, regional-language UI.</p>
+        <div class="bounty-fit"><span><b>Relatable for</b>Edge-AI silicon &amp; inference-optimisation platforms (think: OpenVINO-class toolkits).</span></div>
         <div class="bounty-stack">
-          <span>OpenVINO</span><span>Intel NUC</span><span>CV</span><span>Edge AI</span>
+          <span>OpenVINO</span><span>Edge PC</span><span>CV</span><span>Edge AI</span>
         </div>
       </div>
 
       <div class="bounty-card reveal" data-co="isro">
-        <div class="bounty-stamp">TARGET</div>
-        <div class="bounty-company">ISRO</div>
+        <div class="bounty-stamp">BOUNTY 06</div>
+        <div class="bounty-company">Space &amp; Planetary Robotics</div>
         <div class="bounty-codename">Operation: RoverSim</div>
         <h3 class="bounty-title">Lunar Sim-to-Real Pipeline for Indigenous Rovers</h3>
-        <p class="bounty-desc">An open Isaac Sim environment modelled on Chandrayaan landing zones, with curriculum-trained navigation policies designed for low-data deployment. Bridging research-grade simulators with India's space programme.</p>
+        <p class="bounty-desc">An open simulation environment modelled on lunar landing zones, with curriculum-trained navigation policies designed for low-data deployment. Bridging research-grade simulators with a national space programme.</p>
+        <div class="bounty-fit"><span><b>Relatable for</b>National space programmes &amp; planetary-rover navigation teams.</span></div>
         <div class="bounty-stack">
           <span>Isaac Sim</span><span>RL</span><span>Lunar Terrain</span><span>SLAM</span>
         </div>
@@ -2490,13 +2658,14 @@ footer span{color:var(--blood);}
 
 <!-- ============= CONTACT ============= -->
 <section class="contact" id="contact">
+  <div id="metaballs-host" aria-hidden="true"></div>
   <div class="kanji-deco">夢</div>
   <div class="contact-inner">
     <div class="section-label">Final Panel</div>
     <h2>JOIN THE <span>CREW</span></h2>
     <p>If you're building robots, exploring sim-to-real, hunting hackathons, or just want to swap design-thinking notes — drop a transmission. The next arc is being written.</p>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#d2a1a7b6bab3a0a1bab3bca1a7bfb3bce3e592b5bfb3bbbefcb1bdbf" class="contact-btn">✉ EMAIL</a>
+      <a href="mailto:sudharshansuman17@gmail.com" class="contact-btn">✉ EMAIL</a>
       <a href="tel:+916382968782" class="contact-btn">☎ +91 6382968782</a>
       <a href="https://github.com/SudharshanSuman" class="contact-btn" target="_blank">⌬ GITHUB</a>
       <a href="https://www.credly.com/users/sudharshan-senthilkumar" class="contact-btn" target="_blank">★ CREDLY</a>
@@ -2518,14 +2687,14 @@ footer span{color:var(--blood);}
 
   <label for="bountyMode">Bounty Board · Audience</label>
   <select id="bountyMode">
-    <option value="all">Show all (general portfolio)</option>
+    <option value="all">Show all bounties</option>
     <option value="hidden">Hide entire section</option>
-    <option value="nvidia">Only NVIDIA card</option>
-    <option value="oracle">Only Oracle card</option>
-    <option value="bosch">Only Bosch card</option>
-    <option value="bostondynamics">Only Boston Dynamics</option>
-    <option value="intel">Only Intel</option>
-    <option value="isro">Only ISRO</option>
+    <option value="nvidia">Only · GPU Robotics Sim</option>
+    <option value="oracle">Only · Enterprise Cloud</option>
+    <option value="bosch">Only · Smart-Factory</option>
+    <option value="bostondynamics">Only · Legged Robotics</option>
+    <option value="intel">Only · Edge-AI Silicon</option>
+    <option value="isro">Only · Space Robotics</option>
   </select>
 
   <label for="smoothEase">Smooth Scroll Strength</label>
@@ -2536,9 +2705,23 @@ footer span{color:var(--blood);}
     <option value="on">On</option>
     <option value="off">Off (default arrow)</option>
   </select>
+
+  <label for="metaMode">MetaBalls (Recruit section)</label>
+  <select id="metaMode">
+    <option value="on">On</option>
+    <option value="off">Off</option>
+  </select>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script type="importmap">
+{
+  "imports": {
+    "ogl": "https://esm.sh/ogl@1.0.6"
+  }
+}
+</script>
+<script type="module" src="effects/effects-modules.js"></script>
+<script>
 /* ============= LENIS-STYLE SMOOTH SCROLL ============= */
 const wrapper = document.getElementById('smooth-wrapper');
 const content = document.getElementById('smooth-content');
@@ -2794,6 +2977,26 @@ smoothEase.addEventListener('input',()=>{
 cursorMode.addEventListener('change',()=>{
   setCursor(cursorMode.value === 'on');
 });
+
+/* ============= REACT-BITS EFFECTS WIRING ============= */
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heavyOK = !prefersReduced && window.innerWidth > 900;
+
+  // ---- Toggles ----
+  const metaMode   = document.getElementById('metaMode');
+
+  if(metaMode) metaMode.addEventListener('change',()=>{
+    const fx = window.__effects; if(!fx) return;
+    metaMode.value === 'on' ? fx.meta.start() : fx.meta.stop();
+  });
+
+  // Reflect disabled state when heavy effects can't run (mobile / reduced motion)
+  if(!heavyOK){
+    if(metaMode){ metaMode.value='off'; metaMode.disabled=true; }
+  }
+})();
+
 </script>
 </body>
 </html>
